@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NoteTaker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Note Taker</h1>
+    </header>
+
+    <main class="app-main">
+      <section class="note-form-section">
+        <form id="note-form">
+          <input type="hidden" id="note-id" />
+          <input
+            type="text"
+            id="note-title"
+            placeholder="Note title..."
+            maxlength="120"
+            required
+          />
+          <textarea
+            id="note-content"
+            placeholder="Write your note here..."
+            rows="4"
+          ></textarea>
+          <div class="form-actions">
+            <button type="submit" id="submit-btn" class="btn btn-primary">Add Note</button>
+            <button type="button" id="cancel-btn" class="btn btn-secondary hidden">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="notes-section">
+        <div class="notes-toolbar">
+          <h2>Your Notes</h2>
+          <span id="note-count" class="note-count">0 notes</span>
+        </div>
+        <div id="notes-list" class="notes-list"></div>
+        <p id="empty-state" class="empty-state hidden">No notes yet. Add your first note above!</p>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
