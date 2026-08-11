@@ -36,6 +36,7 @@ Note-Taker/
 ├── server.js             # Express server + REST API
 ├── data.json             # Persisted notes data
 ├── users.json            # user data
+├── Dockerfile            # docker config file for deployment
 ├── package.json
 └── README.md
 ```
