@@ -12,28 +12,29 @@ const notesList = document.getElementById('notes-list');
 const emptyState = document.getElementById('empty-state');
 const noteCount = document.getElementById('note-count');
 const toast = document.getElementById('toast');
+const BASE_URL = "/note-taker";
 
 let editingId = null;
 
 // Auth guard: bounce to login if there's no active session
 async function requireAuth() {
   try {
-    const res = await fetch('/api/auth/me');
+    const res = await fetch(`${BASE_URL}/api/auth/me`);
     if (!res.ok) {
-      window.location.href = '/login.html';
+      window.location.href = `${BASE_URL}/login.html`;
       return;
     }
     const { user } = await res.json();
     welcomeMsg.textContent = `Hi, ${user.username}`;
     fetchNotes();
   } catch (err) {
-    window.location.href = '/login.html';
+    window.location.href = `${BASE_URL}/login.html`;
   }
 }
 
 logoutBtn.addEventListener('click', async () => {
-  await fetch('/api/auth/logout', { method: 'POST' });
-  window.location.href = '/login.html';
+  await fetch(`${BASE_URL}/api/auth/logout`, { method: 'POST' });
+  window.location.href = `${BASE_URL}/login.html`;
 });
 
 // Toast

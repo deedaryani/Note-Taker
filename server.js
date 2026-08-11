@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const BASE_PATH = "/note-taker";
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcryptjs");
@@ -70,7 +71,7 @@ function requireAuth(req, res, next) {
 
 // Auth routes
 
-app.post("/api/auth/signup", async (req, res) => {
+app.post(`${BASE_PATH}/api/auth/signup`, async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !username.trim()) {
@@ -102,7 +103,7 @@ app.post("/api/auth/signup", async (req, res) => {
   res.status(201).json({ message: "Account created", user: publicUser(newUser) });
 });
 
-app.post("/api/auth/login", async (req, res) => {
+app.post(`${BASE_PATH}/api/auth/login`, async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -126,14 +127,14 @@ app.post("/api/auth/login", async (req, res) => {
   res.json({ message: "Logged in", user: publicUser(user) });
 });
 
-app.post("/api/auth/logout", (req, res) => {
+app.post(`${BASE_PATH}/api/auth/logout`, (req, res) => {
   req.session.destroy(() => {
     res.clearCookie("connect.sid");
     res.json({ message: "Logged out" });
   });
 });
 
-app.get("/api/auth/me", (req, res) => {
+app.get(`${BASE_PATH}/api/auth/me`, (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ message: "Not authenticated" });
   }
@@ -147,12 +148,12 @@ app.get("/api/auth/me", (req, res) => {
 
 // Notes routes (all scoped to the logged-in user)
 
-app.get("/api/notes", requireAuth, (req, res) => {
+app.get(`${BASE_PATH}/api/notes`, requireAuth, (req, res) => {
   const data = readData().filter((item) => item.userId === req.session.userId);
   res.json(data);
 });
 
-app.get("/api/notes/:id", requireAuth, (req, res) => {
+app.get(`${BASE_PATH}/api/notes/:id`, requireAuth, (req, res) => {
   const data = readData();
   const item = data.find(
     (item) => item.id === req.params.id && item.userId === req.session.userId
@@ -165,7 +166,7 @@ app.get("/api/notes/:id", requireAuth, (req, res) => {
   res.json(item);
 });
 
-app.post("/api/notes", requireAuth, (req, res) => {
+app.post(`${BASE_PATH}/api/notes`, requireAuth, (req, res) => {
   const { title, content } = req.body;
 
   if (!title || !title.trim()) {
@@ -187,7 +188,7 @@ app.post("/api/notes", requireAuth, (req, res) => {
   res.status(201).json({ message: "Data created successfully", data: newItem });
 });
 
-app.put("/api/notes/:id", requireAuth, (req, res) => {
+app.put(`${BASE_PATH}/api/notes/:id`, requireAuth, (req, res) => {
   const data = readData();
   const itemIndex = data.findIndex(
     (item) => item.id === req.params.id && item.userId === req.session.userId
@@ -208,7 +209,7 @@ app.put("/api/notes/:id", requireAuth, (req, res) => {
   res.json({ message: "Data updated successfully", data: data[itemIndex] });
 });
 
-app.delete("/api/notes/:id", requireAuth, (req, res) => {
+app.delete(`${BASE_PATH}/api/notes/:id`, requireAuth, (req, res) => {
   const data = readData();
   const itemIndex = data.findIndex(
     (item) => item.id === req.params.id && item.userId === req.session.userId
@@ -225,10 +226,10 @@ app.delete("/api/notes/:id", requireAuth, (req, res) => {
 
 // Static files
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(`${BASE_PATH}`, express.static("public"));
 
 // Fallback: serve index.html for any other route
-app.get("/*splat", (req, res) => {
+app.get(`${BASE_PATH}/*splat`, (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 

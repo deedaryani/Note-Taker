@@ -5,11 +5,12 @@ const passwordInput = document.getElementById("password");
 const submitBtn = document.getElementById("auth-submit");
 const subtitle = document.getElementById("auth-subtitle");
 const errorEl = document.getElementById("auth-error");
+const BASE_URL = "/note-taker";
 
 let mode = "login";
 
 // If already logged in, skip straight to the notes app
-fetch("/api/auth/me")
+fetch(`${BASE_URL}/api/auth/me`)
   .then((res) => {
     if (res.ok) window.location.href = "/";
   })
@@ -39,7 +40,7 @@ form.addEventListener("submit", async (e) => {
 
   submitBtn.disabled = true;
   try {
-    const res = await fetch(`/api/auth/${mode === "login" ? "login" : "signup"}`, {
+    const res = await fetch(`${BASE_URL}/api/auth/${mode === "login" ? "login" : "signup"}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
