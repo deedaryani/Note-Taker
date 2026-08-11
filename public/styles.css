@@ -35,6 +35,24 @@ body {
   margin-bottom: 28px;
 }
 
+.app-header-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.welcome-msg {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
 .app-header h1 {
   margin: 0 0 4px;
   font-size: 2rem;
@@ -221,4 +239,100 @@ body {
 
 .toast.error {
   background: var(--danger-dark);
+}
+
+/* Auth page */
+
+.auth-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.auth-wrap {
+  width: 100%;
+  padding: 20px;
+}
+
+.auth-card {
+  max-width: 380px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+}
+
+.auth-title {
+  text-align: center;
+  margin: 0 0 4px;
+  font-size: 1.6rem;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+}
+
+.auth-tabs {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.auth-tab.active {
+  background: var(--primary);
+  color: white;
+}
+
+#auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#username,
+#password {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.15s;
+}
+
+#username:focus,
+#password:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.auth-error {
+  color: var(--danger-dark);
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 14px 0 0;
 }

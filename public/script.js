@@ -1,5 +1,7 @@
 const API_URL = '/api/notes';
 
+const welcomeMsg = document.getElementById('welcome-msg');
+const logoutBtn = document.getElementById('logout-btn');
 const form = document.getElementById('note-form');
 const idInput = document.getElementById('note-id');
 const titleInput = document.getElementById('note-title');
@@ -12,6 +14,27 @@ const noteCount = document.getElementById('note-count');
 const toast = document.getElementById('toast');
 
 let editingId = null;
+
+// Auth guard: bounce to login if there's no active session
+async function requireAuth() {
+  try {
+    const res = await fetch('/api/auth/me');
+    if (!res.ok) {
+      window.location.href = '/login.html';
+      return;
+    }
+    const { user } = await res.json();
+    welcomeMsg.textContent = `Hi, ${user.username}`;
+    fetchNotes();
+  } catch (err) {
+    window.location.href = '/login.html';
+  }
+}
+
+logoutBtn.addEventListener('click', async () => {
+  await fetch('/api/auth/logout', { method: 'POST' });
+  window.location.href = '/login.html';
+});
 
 // Toast
 let toastTimer = null;
@@ -27,6 +50,10 @@ function showToast(message, isError = false) {
 async function fetchNotes() {
   try {
     const res = await fetch(API_URL);
+    if (res.status === 401) {
+      window.location.href = '/login.html';
+      return;
+    }
     if (!res.ok) throw new Error('Failed to fetch notes');
     const notes = await res.json();
     renderNotes(notes);
@@ -132,9 +159,14 @@ form.addEventListener('submit', async (e) => {
       });
     }
 
+    if (res.status === 401) {
+      window.location.href = '/login.html';
+      return;
+    }
+
     if (!res.ok) {
       const err = await res.json();
-      throw new Error(err.error || 'Something went wrong');
+      throw new Error(err.message || 'Something went wrong');
     }
 
     showToast(editingId ? 'Note updated' : 'Note added');
@@ -151,6 +183,10 @@ async function deleteNote(id) {
 
   try {
     const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+    if (res.status === 401) {
+      window.location.href = '/login.html';
+      return;
+    }
     if (!res.ok) throw new Error('Failed to delete note');
     showToast('Note deleted');
     if (editingId === id) resetForm();
@@ -161,4 +197,4 @@ async function deleteNote(id) {
 }
 
 // Init
-fetchNotes();
+requireAuth();
