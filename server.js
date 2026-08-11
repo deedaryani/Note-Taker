@@ -8,6 +8,7 @@ const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.IP || process.env.HOST || '0.0.0.0';
 const DATA_FILE = path.join(__dirname, "data.json");
 const USERS_FILE = path.join(__dirname, "users.json");
 const SALT_ROUNDS = 10;
@@ -231,6 +232,6 @@ app.get("/*splat", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+    console.log(`Server running on ${HOST}:${PORT}`);
 });
