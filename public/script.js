@@ -1,3 +1,4 @@
+const BASE_URL = "/note-taker";
 const API_URL = `${BASE_URL}/api/notes`;
 
 const welcomeMsg = document.getElementById('welcome-msg');
@@ -12,7 +13,7 @@ const notesList = document.getElementById('notes-list');
 const emptyState = document.getElementById('empty-state');
 const noteCount = document.getElementById('note-count');
 const toast = document.getElementById('toast');
-const BASE_URL = "/note-taker";
+
 
 let editingId = null;
 
