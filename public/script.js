@@ -1,4 +1,4 @@
-const API_URL = '/api/notes';
+const API_URL = `${BASE_URL}/api/notes`;
 
 const welcomeMsg = document.getElementById('welcome-msg');
 const logoutBtn = document.getElementById('logout-btn');
@@ -52,7 +52,7 @@ async function fetchNotes() {
   try {
     const res = await fetch(API_URL);
     if (res.status === 401) {
-      window.location.href = '/login.html';
+      window.location.href = `${BASE_URL}/login.html`;
       return;
     }
     if (!res.ok) throw new Error('Failed to fetch notes');
@@ -161,7 +161,7 @@ form.addEventListener('submit', async (e) => {
     }
 
     if (res.status === 401) {
-      window.location.href = '/login.html';
+      window.location.href = `${BASE_URL}/login.html`;
       return;
     }
 
@@ -185,7 +185,7 @@ async function deleteNote(id) {
   try {
     const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
     if (res.status === 401) {
-      window.location.href = '/login.html';
+      window.location.href = `${BASE_URL}/login.html`;
       return;
     }
     if (!res.ok) throw new Error('Failed to delete note');

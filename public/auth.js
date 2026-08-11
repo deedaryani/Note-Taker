@@ -12,7 +12,7 @@ let mode = "login";
 // If already logged in, skip straight to the notes app
 fetch(`${BASE_URL}/api/auth/me`)
   .then((res) => {
-    if (res.ok) window.location.href = "/";
+    if (res.ok) window.location.href = `${BASE_URL}/`;
   })
   .catch(() => {});
 
@@ -52,7 +52,7 @@ form.addEventListener("submit", async (e) => {
       throw new Error(body.message || "Something went wrong");
     }
 
-    window.location.href = "/";
+    window.location.href = `${BASE_URL}/`;
   } catch (err) {
     errorEl.textContent = err.message;
     errorEl.classList.remove("hidden");

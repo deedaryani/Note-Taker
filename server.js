@@ -228,6 +228,10 @@ app.delete(`${BASE_PATH}/api/notes/:id`, requireAuth, (req, res) => {
 
 app.use(`${BASE_PATH}`, express.static("public"));
 
+app.get("/note-taker", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 // Fallback: serve index.html for any other route
 app.get(`${BASE_PATH}/*splat`, (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
