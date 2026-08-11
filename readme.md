@@ -103,7 +103,7 @@ Note-Taker/
 ## Live Links
 
 - **GitHub Repository:**  https://github.com/deedaryani/Note-Taker
-- **Deployed App (Render):**  
+- **Deployed App (alwaysdata):** http://deedaryani.alwaysdata.net/note-taker 
 
 ## Author
 Dee Daryani
